@@ -5,7 +5,7 @@ using Microsoft.AspNet.DynamicData.ModelProviders;
 using TournamentReport.App_Start;
 using TournamentReport.Migrations;
 
-[assembly: WebActivator.PostApplicationStartMethod(typeof (AppInitializer), "PostStart")]
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof (AppInitializer), "PostStart")]
 
 namespace TournamentReport.App_Start
 {
