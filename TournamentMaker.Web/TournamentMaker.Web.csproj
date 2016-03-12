@@ -406,6 +406,7 @@
     </Compile>
     <Compile Include="Helpers\ModelHelpers.cs" />
     <Compile Include="Infrastructure\Filters\ContextFilter.cs" />
+    <Compile Include="ITournamentContext.cs" />
     <Compile Include="Migrations\201408120535566_Initial.cs" />
     <Compile Include="Migrations\201408120535566_Initial.Designer.cs">
       <DependentUpon>201408120535566_Initial.cs</DependentUpon>
@@ -420,6 +421,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\Field.cs" />
+    <Compile Include="Models\Data\IEntity.cs" />
     <Compile Include="Models\View\AccountModels.cs" />
     <Compile Include="Models\Data\Game.cs" />
     <Compile Include="Models\View\GameCreateModel.cs" />

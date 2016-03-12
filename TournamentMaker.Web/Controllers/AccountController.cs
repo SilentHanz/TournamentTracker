@@ -1,8 +1,8 @@
 using System;
 using System.Configuration;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using TournamentReport.Models;
 using TournamentReport.Services;
 
@@ -10,21 +10,15 @@ namespace TournamentReport.Controllers
 {
     public class AccountController : Controller
     {
-        public IWebSecurityService WebSecurityService { get; set; }
-        public IMessengerService MessengerService { get; set; }
+        IWebSecurityService webSecurity;
+        IMessengerService messengerService;
+        ITournamentContext tournamentContext;
 
-        protected override void Initialize(RequestContext requestContext)
+        public AccountController(IWebSecurityService webSecurity, IMessengerService messengerService, ITournamentContext tournamentContext)
         {
-            if (WebSecurityService == null)
-            {
-                WebSecurityService = new WebSecurityService();
-            }
-            if (MessengerService == null)
-            {
-                MessengerService = new MessengerService();
-            }
-
-            base.Initialize(requestContext);
+            this.webSecurity = webSecurity;
+            this.messengerService = messengerService;
+            this.tournamentContext = tournamentContext;
         }
 
         // **************************************
@@ -45,7 +39,7 @@ namespace TournamentReport.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (WebSecurityService.Login(model.UserName, model.Password, model.RememberMe))
+                if (webSecurity.Login(model.UserName, model.Password, model.RememberMe))
                 {
                     if (Url.IsLocalUrl(returnUrl))
                     {
@@ -66,7 +60,7 @@ namespace TournamentReport.Controllers
 
         public ActionResult LogOff()
         {
-            WebSecurityService.Logout();
+            webSecurity.Logout();
 
             return RedirectToAction("Index", "Home");
         }
@@ -77,7 +71,7 @@ namespace TournamentReport.Controllers
 
         public ActionResult Register()
         {
-            ViewBag.PasswordLength = WebSecurityService.MinPasswordLength;
+            ViewBag.PasswordLength = webSecurity.MinPasswordLength;
             return View();
         }
 
@@ -89,7 +83,7 @@ namespace TournamentReport.Controllers
                 // Attempt to register the user
                 var requireEmailConfirmation =
                     Convert.ToBoolean(ConfigurationManager.AppSettings["requireEmailConfirmation"] ?? "false");
-                var token = WebSecurityService.CreateUserAndAccount(model.UserName, model.Password,
+                var token = webSecurity.CreateUserAndAccount(model.UserName, model.Password,
                                                                     requireConfirmationToken: requireEmailConfirmation);
 
                 if (requireEmailConfirmation)
@@ -115,30 +109,30 @@ namespace TournamentReport.Controllers
                         // It's generally a best practice to not send emails (or do anything on that could take a long time and potentially fail)
                         // on the same thread as the main site
                         // You should probably hand this off to a background MessageSender service by queueing the email, etc.
-                        MessengerService.Send(fromAddress, toAddress, subject, body, true);
+                        messengerService.Send(fromAddress, toAddress, subject, body, true);
                     }
 
                     // Thank the user for registering and let them know an email is on its way
                     return RedirectToAction("Thanks", "Account");
                 }
                 // Navigate back to the homepage and exit
-                WebSecurityService.Login(model.UserName, model.Password);
+                webSecurity.Login(model.UserName, model.Password);
                 return RedirectToAction("Index", "Home");
             }
 
             // If we got this far, something failed, redisplay form
-            ViewBag.PasswordLength = WebSecurityService.MinPasswordLength;
+            ViewBag.PasswordLength = webSecurity.MinPasswordLength;
             return View(model);
         }
 
         public ActionResult Confirm()
         {
             string confirmationToken = Request.QueryString["confirmationCode"];
-            WebSecurityService.Logout();
+            webSecurity.Logout();
 
             if (!string.IsNullOrEmpty(confirmationToken))
             {
-                if (WebSecurityService.ConfirmAccount(confirmationToken))
+                if (webSecurity.ConfirmAccount(confirmationToken))
                 {
                     ViewBag.Message =
                         "Registration Confirmed! Click on the login link at the top right of the page to continue.";
@@ -159,7 +153,7 @@ namespace TournamentReport.Controllers
         [Authorize]
         public ActionResult ChangePassword()
         {
-            ViewBag.PasswordLength = WebSecurityService.MinPasswordLength;
+            ViewBag.PasswordLength = webSecurity.MinPasswordLength;
             return View();
         }
 
@@ -169,7 +163,7 @@ namespace TournamentReport.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (WebSecurityService.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword))
+                if (webSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword))
                 {
                     return RedirectToAction("ChangePasswordSuccess");
                 }
@@ -177,7 +171,7 @@ namespace TournamentReport.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ViewBag.PasswordLength = WebSecurityService.MinPasswordLength;
+            ViewBag.PasswordLength = webSecurity.MinPasswordLength;
             return View(model);
         }
 
@@ -194,9 +188,11 @@ namespace TournamentReport.Controllers
 
             if (ModelState.IsValid)
             {
-                if (WebSecurityService.GetUserId(model.UserName) > -1 && WebSecurityService.IsConfirmed(model.UserName))
+                var userId = webSecurity.GetUserId(model.UserName);
+                var user = tournamentContext.Users.Find(userId);
+                if (user != null && webSecurity.IsConfirmed(model.UserName) && user.Email.Equals(model.Email, StringComparison.OrdinalIgnoreCase))
                 {
-                    resetToken = WebSecurityService.GeneratePasswordResetToken(model.UserName);
+                    resetToken = webSecurity.GeneratePasswordResetToken(model.UserName);
                     isValid = true;
                 }
 
@@ -217,7 +213,7 @@ namespace TournamentReport.Controllers
                                 "Use this password reset token to reset your password. <br/>The token is: {0}<br/>Visit <a href='{1}'>{1}</a> to reset your password.<br/>",
                                 resetToken, resetUrl);
 
-                        MessengerService.Send(fromAddress, toAddress, subject, body, true);
+                        messengerService.Send(fromAddress, toAddress, subject, body, true);
                     }
                 }
                 return RedirectToAction("ForgotPasswordMessage");
@@ -240,7 +236,7 @@ namespace TournamentReport.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (WebSecurityService.ResetPassword(model.ResetToken, model.NewPassword))
+                if (webSecurity.ResetPassword(model.ResetToken, model.NewPassword))
                 {
                     return RedirectToAction("PasswordResetSuccess");
                 }
