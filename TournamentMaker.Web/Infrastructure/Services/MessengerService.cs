@@ -5,8 +5,6 @@ namespace TournamentReport.Services
 {
 	public class MessengerService : IMessengerService
 	{
-		#region IMessengerService Members
-
 		public bool Send(string from, string to, string subject, string body, bool isBodyHtml)
 		{
 			var isSuccess = false;
@@ -21,12 +19,10 @@ namespace TournamentReport.Services
 			}
 			catch (Exception ex)
 			{
-				//Log exception
+				//todo: Log exception
 			}
 		
 			return isSuccess;
 		}
-
-		#endregion
 	}
 }
