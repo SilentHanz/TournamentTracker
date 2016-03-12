@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Web.Mvc;
 using System.Web.Security;
 using TournamentReport.Services;
-using WebActivator;
+using WebActivatorEx;
 using WebMatrix.WebData;
 
 [assembly: PreApplicationStartMethod(typeof (TournamentReport.App_Start.SimpleMembershipMvc3), "Start")]
