@@ -407,17 +407,9 @@
     <Compile Include="Helpers\ModelHelpers.cs" />
     <Compile Include="Infrastructure\Filters\ContextFilter.cs" />
     <Compile Include="ITournamentContext.cs" />
-    <Compile Include="Migrations\201408120535566_Initial.cs" />
-    <Compile Include="Migrations\201408120535566_Initial.Designer.cs">
-      <DependentUpon>201408120535566_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201408120610052_GameTime.cs" />
-    <Compile Include="Migrations\201408120610052_GameTime.Designer.cs">
-      <DependentUpon>201408120610052_GameTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201408120653127_Fields.cs" />
-    <Compile Include="Migrations\201408120653127_Fields.Designer.cs">
-      <DependentUpon>201408120653127_Fields.cs</DependentUpon>
+    <Compile Include="Migrations\201603120505418_Initial.cs" />
+    <Compile Include="Migrations\201603120505418_Initial.Designer.cs">
+      <DependentUpon>201603120505418_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\Field.cs" />
@@ -620,14 +612,8 @@
     <Content Include="Views\Rounds\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201408120535566_Initial.resx">
-      <DependentUpon>201408120535566_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201408120610052_GameTime.resx">
-      <DependentUpon>201408120610052_GameTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201408120653127_Fields.resx">
-      <DependentUpon>201408120653127_Fields.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603120505418_Initial.resx">
+      <DependentUpon>201603120505418_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

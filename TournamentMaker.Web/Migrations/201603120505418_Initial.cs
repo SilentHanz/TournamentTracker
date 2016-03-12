@@ -8,6 +8,17 @@ namespace TournamentReport.Migrations
         public override void Up()
         {
             CreateTable(
+                "dbo.Fields",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(maxLength: 4000),
+                        Description = c.String(maxLength: 4000),
+                        Address = c.String(maxLength: 4000),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.Games",
                 c => new
                     {
@@ -17,10 +28,14 @@ namespace TournamentReport.Migrations
                         HomeTeamScore = c.Int(),
                         AwayTeamScore = c.Int(),
                         RoundId = c.Int(nullable: false),
+                        GameTime = c.DateTime(),
+                        FieldId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Fields", t => t.FieldId)
                 .ForeignKey("dbo.Rounds", t => t.RoundId, cascadeDelete: true)
-                .Index(t => t.RoundId);
+                .Index(t => t.RoundId)
+                .Index(t => t.FieldId);
             
             CreateTable(
                 "dbo.Rounds",
@@ -54,6 +69,7 @@ namespace TournamentReport.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(maxLength: 4000),
+                        Email = c.String(maxLength: 4000),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -98,11 +114,13 @@ namespace TournamentReport.Migrations
             DropForeignKey("dbo.Rounds", "TournamentId", "dbo.Tournaments");
             DropForeignKey("dbo.Tournaments", "Owner_Id", "dbo.Users");
             DropForeignKey("dbo.Games", "RoundId", "dbo.Rounds");
+            DropForeignKey("dbo.Games", "FieldId", "dbo.Fields");
             DropIndex("dbo.TeamGames", new[] { "Game_Id" });
             DropIndex("dbo.TeamGames", new[] { "Team_Id" });
             DropIndex("dbo.Teams", new[] { "Tournament_Id" });
             DropIndex("dbo.Tournaments", new[] { "Owner_Id" });
             DropIndex("dbo.Rounds", new[] { "TournamentId" });
+            DropIndex("dbo.Games", new[] { "FieldId" });
             DropIndex("dbo.Games", new[] { "RoundId" });
             DropTable("dbo.TeamGames");
             DropTable("dbo.Teams");
@@ -110,6 +128,7 @@ namespace TournamentReport.Migrations
             DropTable("dbo.Tournaments");
             DropTable("dbo.Rounds");
             DropTable("dbo.Games");
+            DropTable("dbo.Fields");
         }
     }
 }
