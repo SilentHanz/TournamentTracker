@@ -12,6 +12,8 @@ namespace TournamentReport.App_Start
         internal static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IWebSecurityService>().To<WebSecurityService>();
+            kernel.Bind<IMessengerService>().To<MessengerService>();
+            kernel.Bind<ITournamentContext>().To<TournamentContext>();
         }
     }
 }

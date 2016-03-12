@@ -3,7 +3,7 @@ using TournamentReport.Models;
 
 namespace TournamentReport
 {
-    public class TournamentContext : DbContext
+    public class TournamentContext : DbContext, ITournamentContext
     {
         public DbSet<Team> Teams { get; set; }
 
@@ -13,8 +13,8 @@ namespace TournamentReport
 
         public DbSet<Tournament> Tournaments { get; set; }
 
-        public DbSet<User> Users { get; set; }
+        public IDbSet<User> Users { get; set; }
 
-        public System.Data.Entity.DbSet<TournamentReport.Models.Field> Fields { get; set; }
+        public DbSet<Field> Fields { get; set; }
     }
 }

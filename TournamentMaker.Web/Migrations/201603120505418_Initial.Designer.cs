@@ -13,7 +13,7 @@ namespace TournamentReport.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201408120535566_Initial"; }
+            get { return "201603120505418_Initial"; }
         }
         
         string IMigrationMetadata.Source

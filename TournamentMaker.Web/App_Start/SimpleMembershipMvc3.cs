@@ -44,7 +44,7 @@ namespace TournamentReport.App_Start
             if (!webSecurity.UserExists("Admin"))
             {
                 // TODO: Make sure password reset functionality works.
-                webSecurity.CreateUserAndAccount("Admin", GenerateRandomPassword());
+                webSecurity.CreateUserAndAccount("Admin", GenerateRandomPassword(), new { Email = "example@example.com" });
                 Roles.AddUserToRole("Admin", Constants.AdministratorsRoleName);
             }
         }

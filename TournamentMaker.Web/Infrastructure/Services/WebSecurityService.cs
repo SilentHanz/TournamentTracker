@@ -6,8 +6,6 @@ namespace TournamentReport.Services
 {
 	public class WebSecurityService : IWebSecurityService
 	{
-		#region IWebSecurityService Members
-
 		public bool ChangePassword(string userName, string currentPassword, string newPassword)
 		{
 			return WebSecurity.ChangePassword(userName, currentPassword, newPassword);
@@ -157,7 +155,5 @@ namespace TournamentReport.Services
 		{
 			get { return Membership.Provider.MinRequiredPasswordLength; }
 		}
-
-		#endregion
 	}
 }
