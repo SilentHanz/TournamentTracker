@@ -121,7 +121,6 @@ Backup*/
 UpgradeLog*.XML
 
 
-
 ############
 ## Windows
 ############
@@ -167,3 +166,4 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+*.pubxml
