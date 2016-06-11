@@ -404,6 +404,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Helpers\ModelHelpers.cs" />
     <Compile Include="Infrastructure\Filters\ContextFilter.cs" />
     <Compile Include="ITournamentContext.cs" />

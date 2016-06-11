@@ -19,7 +19,7 @@
             <a href="/tournaments/@tournament.Slug">@Html.DisplayFor(m => tournament.Name)</a>
         </td>
         <td>
-            <strong>@Html.DisplayFor(m => tournament.Description)</strong>
+            <strong>@Html.Multiline(tournament.Description)</strong>
         </td>
         <td>
         @if (ViewBag.CanEditTournament(tournament)) {
@@ -36,7 +36,7 @@
             <a href="/tournaments/@tournament.Slug">@Html.DisplayFor(m => tournament.Name)</a>
         </td>
         <td>
-            @Html.DisplayFor(m => tournament.Description)
+            @Html.Multiline(tournament.Description)
         </td>
         <td>
         @if (ViewBag.CanEditTournament(tournament)) {
