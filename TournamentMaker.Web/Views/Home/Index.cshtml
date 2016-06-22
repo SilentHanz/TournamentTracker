@@ -17,7 +17,9 @@
     <tr valign="top">
         <th>Tournament</th>
         <th>Description</th>
+@if (ViewBag.HasEditAccess) {
         <th></th>
+}
     </tr>
 @foreach (var tournament in Model.RecentTournaments)
 {
@@ -28,14 +30,14 @@
         <td>
             <strong>@Html.Multiline(tournament.Description)</strong>
         </td>
-        <td>
         @if (ViewBag.CanEditTournament(tournament)) {
+        <td>
             @Html.ActionLink("Edit", "Edit", "Tournaments", new { id = tournament.Id, tournamentSlug = tournament.Slug }, null)
-        }
         </td>
+        }
     </tr>
 }
-    <tr><td colspan="2" style="padding: 10px;">past years</td></tr>
+
 @foreach (var tournament in Model.ArchivedTournaments)
 {
     <tr>
@@ -45,11 +47,13 @@
         <td>
             @Html.Multiline(tournament.Description)
         </td>
-        <td>
+        
         @if (ViewBag.CanEditTournament(tournament)) {
+        <td>
             @Html.ActionLink("Edit", "Edit", "Tournaments", new { id = tournament.Id, tournamentSlug = tournament.Slug }, null)
-        }
         </td>
+        }
+        
     </tr>
 }
 </table>

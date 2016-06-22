@@ -1,10 +1,12 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using TournamentReport.App_Start;
 using TournamentReport.Models;
 
 namespace TournamentReport.Controllers
 {
+    [Authorize(Roles = Constants.AdministratorsRoleName)]
     public class GamesController : Controller
     {
         readonly TournamentContext db = new TournamentContext();
@@ -138,20 +140,22 @@ namespace TournamentReport.Controllers
             return View(game);
         }
 
-
         public ActionResult Delete(int id)
         {
             var game = db.Games.Find(id);
+            if (game == null) return HttpNotFound();
             return View(game);
         }
 
         //
         // POST: /Games/Delete/5
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id, string tournamentSlug)
         {
             var game = db.Games.Find(id);
+            if (game == null) return HttpNotFound();
             db.Games.Remove(game);
             db.SaveChanges();
             return RedirectToAction("Standings", "Home", new {tournamentSlug});
@@ -163,13 +167,11 @@ namespace TournamentReport.Controllers
             base.Dispose(disposing);
         }
 
-        [Authorize(Roles = "Administrators")]
         public ActionResult ResetScores(string tournamentSlug)
         {
             return View();
         }
 
-        [Authorize(Roles = "Administrators")]
         [HttpPost]
         public ActionResult ResetScores(string tournamentSlug, string submit)
         {

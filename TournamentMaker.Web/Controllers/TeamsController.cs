@@ -1,10 +1,12 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using TournamentReport.App_Start;
 using TournamentReport.Models;
 
 namespace TournamentReport.Controllers
 {
+    [Authorize(Roles = Constants.AdministratorsRoleName)]
     public class TeamsController : Controller
     {
         readonly TournamentContext db = new TournamentContext();
@@ -21,7 +23,10 @@ namespace TournamentReport.Controllers
         {
             if (ModelState.IsValid)
             {
-                var tournament = db.Tournaments.First(t => t.Slug == tournamentSlug);
+                var tournament = db.Tournaments.FirstOrDefault(t => t.Slug == tournamentSlug);
+
+                if (tournament == null) return HttpNotFound();
+
                 team.Tournament = tournament;
                 db.Teams.Add(team);
                 db.SaveChanges();
@@ -55,7 +60,8 @@ namespace TournamentReport.Controllers
             return View(team);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
             var team = db.Teams.Include(t => t.Tournament).FirstOrDefault(t => t.Id == id);

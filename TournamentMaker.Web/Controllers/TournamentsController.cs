@@ -1,10 +1,12 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using TournamentReport.App_Start;
 using TournamentReport.Models;
 
 namespace TournamentReport.Controllers
 {
+    [Authorize(Roles = Constants.AdministratorsRoleName)]
     public class TournamentsController : Controller
     {
         private readonly TournamentContext db = new TournamentContext();
@@ -30,7 +32,9 @@ namespace TournamentReport.Controllers
 
         public ActionResult Edit(int id)
         {
-            Tournament tournament = db.Tournaments.Find(id);
+            var tournament = db.Tournaments.Find(id);
+            if (tournament == null) return HttpNotFound();
+
             return View(tournament);
         }
 
@@ -48,14 +52,17 @@ namespace TournamentReport.Controllers
 
         public ActionResult Delete(int id)
         {
-            Tournament tournament = db.Tournaments.Find(id);
+            var tournament = db.Tournaments.Find(id);
+            if (tournament == null) return HttpNotFound();
             return View(tournament);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Tournament tournament = db.Tournaments.Find(id);
+            var tournament = db.Tournaments.Find(id);
+            if (tournament == null) return HttpNotFound();
             db.Tournaments.Remove(tournament);
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
