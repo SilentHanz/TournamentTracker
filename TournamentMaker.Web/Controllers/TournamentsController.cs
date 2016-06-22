@@ -32,7 +32,9 @@ namespace TournamentReport.Controllers
 
         public ActionResult Edit(int id)
         {
-            Tournament tournament = db.Tournaments.Find(id);
+            var tournament = db.Tournaments.Find(id);
+            if (tournament == null) return HttpNotFound();
+
             return View(tournament);
         }
 
@@ -50,7 +52,8 @@ namespace TournamentReport.Controllers
 
         public ActionResult Delete(int id)
         {
-            Tournament tournament = db.Tournaments.Find(id);
+            var tournament = db.Tournaments.Find(id);
+            if (tournament == null) return HttpNotFound();
             return View(tournament);
         }
 
@@ -58,7 +61,8 @@ namespace TournamentReport.Controllers
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Tournament tournament = db.Tournaments.Find(id);
+            var tournament = db.Tournaments.Find(id);
+            if (tournament == null) return HttpNotFound();
             db.Tournaments.Remove(tournament);
             db.SaveChanges();
             return RedirectToAction("Index", "Home");

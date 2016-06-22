@@ -24,7 +24,7 @@ namespace TournamentReport.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Field field = db.Fields.Find(id);
+            var field = db.Fields.Find(id);
             if (field == null)
             {
                 return HttpNotFound();
@@ -65,7 +65,7 @@ namespace TournamentReport.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Field field = db.Fields.Find(id);
+            var field = db.Fields.Find(id);
             if (field == null)
             {
                 return HttpNotFound();
@@ -98,7 +98,7 @@ namespace TournamentReport.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Field field = db.Fields.Find(id);
+            var field = db.Fields.Find(id);
             if (field == null)
             {
                 return HttpNotFound();
@@ -113,7 +113,11 @@ namespace TournamentReport.Controllers
         [Authorize(Roles = Constants.AdministratorsRoleName)]
         public ActionResult DeleteConfirmed(int id)
         {
-            Field field = db.Fields.Find(id);
+            var field = db.Fields.Find(id);
+            if (field == null)
+            {
+                return HttpNotFound();
+            }
             db.Fields.Remove(field);
             db.SaveChanges();
             return RedirectToAction("Index");

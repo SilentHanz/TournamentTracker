@@ -143,6 +143,7 @@ namespace TournamentReport.Controllers
         public ActionResult Delete(int id)
         {
             var game = db.Games.Find(id);
+            if (game == null) return HttpNotFound();
             return View(game);
         }
 
@@ -154,6 +155,7 @@ namespace TournamentReport.Controllers
         public ActionResult DeleteConfirmed(int id, string tournamentSlug)
         {
             var game = db.Games.Find(id);
+            if (game == null) return HttpNotFound();
             db.Games.Remove(game);
             db.SaveChanges();
             return RedirectToAction("Standings", "Home", new {tournamentSlug});

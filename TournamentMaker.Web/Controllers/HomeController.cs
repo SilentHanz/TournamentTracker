@@ -21,7 +21,9 @@ namespace TournamentReport.Controllers
                 .Include(t => t.Teams)
                 .Include(t => t.Rounds.Select(r => r.Games.Select(g => g.Field)))
                 .Include(t => t.Rounds)
-                .First(t => t.Slug == tournamentSlug);
+                .FirstOrDefault(t => t.Slug == tournamentSlug);
+
+            if (tournament == null) return HttpNotFound();
 
             var standings = tournament.Teams.ToList().OrderByDescending(t => t.Points)
                 .ThenByDescending(t => t.GoalsScored - t.GoalsAgainst)

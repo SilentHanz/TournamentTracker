@@ -23,7 +23,10 @@ namespace TournamentReport.Controllers
         {
             if (ModelState.IsValid)
             {
-                var tournament = db.Tournaments.First(t => t.Slug == tournamentSlug);
+                var tournament = db.Tournaments.FirstOrDefault(t => t.Slug == tournamentSlug);
+
+                if (tournament == null) return HttpNotFound();
+
                 team.Tournament = tournament;
                 db.Teams.Add(team);
                 db.SaveChanges();

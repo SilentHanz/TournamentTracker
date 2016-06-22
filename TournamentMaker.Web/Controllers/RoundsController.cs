@@ -23,9 +23,11 @@ namespace TournamentReport.Controllers
         //
         // GET: /Rounds/Details/5
 
-        public ViewResult Details(int id)
+        public ActionResult Details(int id)
         {
-            Round round = db.Rounds.Find(id);
+            var round = db.Rounds.Find(id);
+            if (round == null) return HttpNotFound();
+
             return View(round);
         }
 
@@ -34,7 +36,9 @@ namespace TournamentReport.Controllers
         [Authorize(Roles = Constants.AdministratorsRoleName)]
         public ActionResult Create(string tournamentSlug)
         {
-            var tournament = db.Tournaments.First(t => t.Slug == tournamentSlug);
+            var tournament = db.Tournaments.FirstOrDefault(t => t.Slug == tournamentSlug);
+            if (tournament == null) return HttpNotFound();
+
             ViewBag.TournamentId = new SelectList(db.Tournaments, "Id", "Name", tournament.Id);
             return View();
         }
@@ -62,7 +66,9 @@ namespace TournamentReport.Controllers
         [Authorize(Roles = Constants.AdministratorsRoleName)]
         public ActionResult Edit(int id)
         {
-            Round round = db.Rounds.Find(id);
+            var round = db.Rounds.Find(id);
+            if (round == null) return HttpNotFound();
+
             ViewBag.TournamentId = new SelectList(db.Tournaments, "Id", "Name", round.TournamentId);
             return View(round);
         }
@@ -89,7 +95,8 @@ namespace TournamentReport.Controllers
         [Authorize(Roles = Constants.AdministratorsRoleName)]
         public ActionResult Delete(int id)
         {
-            Round round = db.Rounds.Find(id);
+            var round = db.Rounds.Find(id);
+            if (round == null) return HttpNotFound();
             return View(round);
         }
 
@@ -101,7 +108,9 @@ namespace TournamentReport.Controllers
         [Authorize(Roles = Constants.AdministratorsRoleName)]
         public ActionResult DeleteConfirmed(int id, string tournamentSlug)
         {
-            Round round = db.Rounds.Find(id);
+            var round = db.Rounds.Find(id);
+            if (round == null) return HttpNotFound();
+
             db.Rounds.Remove(round);
             db.SaveChanges();
             return RedirectToAction("Standings", "Home", new {tournamentSlug});
