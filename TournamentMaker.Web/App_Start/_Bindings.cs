@@ -1,4 +1,4 @@
-﻿using Ninject;
+﻿using SimpleInjector;
 using TournamentReport.Services;
 
 namespace TournamentReport.App_Start
@@ -8,12 +8,12 @@ namespace TournamentReport.App_Start
         /// <summary>
         /// Load your modules or register your services here!
         /// </summary>
-        /// <param name="kernel">The kernel.</param>
-        internal static void RegisterServices(IKernel kernel)
+        /// <param name="container">The container.</param>
+        internal static void RegisterServices(Container container)
         {
-            kernel.Bind<IWebSecurityService>().To<WebSecurityService>();
-            kernel.Bind<IMessengerService>().To<MessengerService>();
-            kernel.Bind<ITournamentContext>().To<TournamentContext>();
+            container.Register<IWebSecurityService, WebSecurityService>();
+            container.Register<IMessengerService, MessengerService>();
+            container.Register<ITournamentContext, TournamentContext>(Lifestyle.Scoped);
         }
     }
 }
