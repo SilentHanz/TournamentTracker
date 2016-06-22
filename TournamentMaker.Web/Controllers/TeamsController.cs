@@ -1,10 +1,12 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using TournamentReport.App_Start;
 using TournamentReport.Models;
 
 namespace TournamentReport.Controllers
 {
+    [Authorize(Roles = Constants.AdministratorsRoleName)]
     public class TeamsController : Controller
     {
         readonly TournamentContext db = new TournamentContext();
@@ -55,7 +57,8 @@ namespace TournamentReport.Controllers
             return View(team);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
             var team = db.Teams.Include(t => t.Tournament).FirstOrDefault(t => t.Id == id);

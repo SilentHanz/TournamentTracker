@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using TournamentReport.App_Start;
 using TournamentReport.Models;
 
 namespace TournamentReport.Controllers
@@ -30,7 +31,7 @@ namespace TournamentReport.Controllers
 
         //
         // GET: /Rounds/Create
-
+        [Authorize(Roles = Constants.AdministratorsRoleName)]
         public ActionResult Create(string tournamentSlug)
         {
             var tournament = db.Tournaments.First(t => t.Slug == tournamentSlug);
@@ -42,6 +43,7 @@ namespace TournamentReport.Controllers
         // POST: /Rounds/Create
 
         [HttpPost]
+        [Authorize(Roles = Constants.AdministratorsRoleName)]
         public ActionResult Create(Round round, string tournamentSlug)
         {
             if (ModelState.IsValid)
@@ -57,7 +59,7 @@ namespace TournamentReport.Controllers
 
         //
         // GET: /Rounds/Edit/5
-
+        [Authorize(Roles = Constants.AdministratorsRoleName)]
         public ActionResult Edit(int id)
         {
             Round round = db.Rounds.Find(id);
@@ -69,6 +71,7 @@ namespace TournamentReport.Controllers
         // POST: /Rounds/Edit/5
 
         [HttpPost]
+        [Authorize(Roles = Constants.AdministratorsRoleName)]
         public ActionResult Edit(Round round, string tournamentSlug)
         {
             if (ModelState.IsValid)
@@ -83,7 +86,7 @@ namespace TournamentReport.Controllers
 
         //
         // GET: /Rounds/Delete/5
-
+        [Authorize(Roles = Constants.AdministratorsRoleName)]
         public ActionResult Delete(int id)
         {
             Round round = db.Rounds.Find(id);
@@ -93,7 +96,9 @@ namespace TournamentReport.Controllers
         //
         // POST: /Rounds/Delete/5
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
+        [Authorize(Roles = Constants.AdministratorsRoleName)]
         public ActionResult DeleteConfirmed(int id, string tournamentSlug)
         {
             Round round = db.Rounds.Find(id);
