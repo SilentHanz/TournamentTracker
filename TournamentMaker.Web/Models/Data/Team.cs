@@ -27,10 +27,29 @@ namespace TournamentReport.Models {
                 return Games.Count(g => g.HomeTeamScore != null && g.InGame(this));
             }
         }
-        public int Points {
-            get {
+
+        public int ShutOuts
+        {
+            get
+            {
+                if (Games == null)
+                {
+                    return 0;
+                }
+                return Games.Where(g => g.HomeTeamId == Id).Count(g => g.AwayTeamScore == 0)
+                    + Games.Where(g => g.AwayTeamId == Id).Count(g => g.HomeTeamScore == 0);
+            }
+        }
+
+        public int Points
+        {
+            get
+            {
                 CalculateWinsLosses();
-                return Wins * 3 + Ties;
+                return Wins * Tournament.PointsForWin
+                    + Ties * Tournament.PointsForDraw
+                    + Math.Min(GoalsScored * Tournament.PointsPerGoalScored, Tournament.MaxPointsForGoalsScored)
+                    + ShutOuts * Tournament.PointsForShutOut;
             }
         }
 

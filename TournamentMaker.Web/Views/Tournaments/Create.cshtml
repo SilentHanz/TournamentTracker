@@ -38,6 +38,49 @@
             @Html.ValidationMessageFor(model => model.Description)
         </div>
 
+        <fieldset>
+            <legend>Scoring Rules</legend>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.PointsForWin)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.PointsForWin)
+                @Html.ValidationMessageFor(model => model.PointsForWin)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.PointsForDraw)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.PointsForDraw)
+                @Html.ValidationMessageFor(model => model.PointsForDraw)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.PointsForShutOut)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.PointsForShutOut)
+                @Html.ValidationMessageFor(model => model.PointsForShutOut)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.PointsPerGoalScored)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.PointsPerGoalScored)
+                @Html.ValidationMessageFor(model => model.PointsPerGoalScored)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.MaxPointsForGoalsScored) (<em>This caps the number of points a team can get for goals.</em>)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.MaxPointsForGoalsScored)
+                @Html.ValidationMessageFor(model => model.MaxPointsForGoalsScored)
+            </div>
+        </fieldset>
+
         <p>
             <input type="submit" value="Create" />
         </p>

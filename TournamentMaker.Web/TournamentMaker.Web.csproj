@@ -416,6 +416,10 @@
     <Compile Include="Migrations\201607290306142_HomeTeamCards.Designer.cs">
       <DependentUpon>201607290306142_HomeTeamCards.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607290437382_TournamentScoring.cs" />
+    <Compile Include="Migrations\201607290437382_TournamentScoring.Designer.cs">
+      <DependentUpon>201607290437382_TournamentScoring.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\Field.cs" />
     <Compile Include="Models\Data\IEntity.cs" />
@@ -622,6 +626,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607290306142_HomeTeamCards.resx">
       <DependentUpon>201607290306142_HomeTeamCards.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607290437382_TournamentScoring.resx">
+      <DependentUpon>201607290437382_TournamentScoring.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -8,8 +8,8 @@ public class TeamTest
     public void TieCountsAsOnePoint()
     {
         // arrange
-        var homeTeam = new Team();
-        var awayTeam = new Team();
+        var homeTeam = new Team { Tournament = new Tournament { PointsForDraw = 1 } };
+        var awayTeam = new Team { Tournament = new Tournament { PointsForDraw = 1 } };
         var games = new List<Game> {
                 new Game {
                     Teams = new List<Team> { homeTeam, awayTeam },
@@ -27,11 +27,11 @@ public class TeamTest
     }
 
     [Fact]
-    public void WinCountsAsThreePoints()
+    public void WinCountsAsPointsPerWin()
     {
         // arrange
-        var homeTeam = new Team();
-        var awayTeam = new Team();
+        var homeTeam = new Team { Tournament = new Tournament { PointsForWin = 3 } };
+        var awayTeam = new Team { Tournament = new Tournament { PointsForWin = 3 } };
         var games = new List<Game> {
                 new Game {
                     Teams = new List<Team> { homeTeam, awayTeam },
@@ -52,8 +52,8 @@ public class TeamTest
     public void LossCountsAsZeroPoints()
     {
         // arrange
-        var homeTeam = new Team();
-        var awayTeam = new Team();
+        var homeTeam = new Team { Tournament = new Tournament() };
+        var awayTeam = new Team { Tournament = new Tournament() };
         var games = new List<Game> {
                 new Game {
                     Teams = new List<Team> { homeTeam, awayTeam },
