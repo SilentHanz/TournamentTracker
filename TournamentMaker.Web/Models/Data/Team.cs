@@ -17,6 +17,7 @@ namespace TournamentReport.Models {
 
         public int GoalsScored { get; private set; }
         public int GoalsAgainst { get; private set; }
+        public int GoalDifferential => GoalsScored - GoalsAgainst;
 
         public int GamesPlayed {
             get {

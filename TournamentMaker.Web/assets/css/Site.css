@@ -12,6 +12,14 @@ body {
     color: #696969;
 }
 
+span.positive {
+    color: green;
+}
+
+span.negative {
+    color: red;
+}
+
 a:link {
     color: #034af3;
     text-decoration: underline;
