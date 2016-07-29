@@ -79,8 +79,10 @@ namespace TournamentReport.Controllers
                 // Since we're only changing the score, we need to load the full
                 // game from the database.
                 var dbGame = db.Games.Include(g => g.Teams).FirstOrDefault(g => g.Id == game.Id);
-                dbGame.AwayTeamScore = game.AwayTeamScore;
                 dbGame.HomeTeamScore = game.HomeTeamScore;
+                dbGame.AwayTeamScore = game.AwayTeamScore;
+                dbGame.HomeTeamCards = game.HomeTeamCards;
+                dbGame.AwayTeamCards = game.AwayTeamCards;
                 db.SaveChanges();
                 return RedirectToAction("Standings", "Home", new {tournamentSlug});
             }

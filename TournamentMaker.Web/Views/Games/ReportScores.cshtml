@@ -1,20 +1,20 @@
 ﻿@model TournamentReport.Models.Game
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Game Result for " + Model.HomeTeam.Name + " vs " + Model.AwayTeam.Name;
 }
-
-<h2>Edit</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>Game</legend>
+        <legend>Game Result for @Model.HomeTeam.Name (home) vs @Model.AwayTeam.Name (away)</legend>
 
         @Html.HiddenFor(model => model.Id)
 
+        <h3>Score</h3>
+
         <div class="editor-label">
-            @Html.LabelFor(model => model.HomeTeamScore) (@Model.HomeTeam.Name)
+            Home Team <strong>(@Model.HomeTeam.Name)</strong>
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.HomeTeamScore)
@@ -22,11 +22,28 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.AwayTeamScore) (@Model.AwayTeam.Name)
+            Away Team <strong>(@Model.AwayTeam.Name)</strong>
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.AwayTeamScore)
             @Html.ValidationMessageFor(model => model.AwayTeamScore)
+        </div>
+
+        <h3>Cards</h3>
+        <div class="editor-label">
+            Home Team <strong>(@Model.HomeTeam.Name)</strong>
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.HomeTeamCards)
+            @Html.ValidationMessageFor(model => model.HomeTeamCards)
+        </div>
+
+        <div class="editor-label">
+            Away Team <strong>(@Model.AwayTeam.Name)</strong>
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AwayTeamCards)
+            @Html.ValidationMessageFor(model => model.AwayTeamCards)
         </div>
 
 @*        <div class="editor-label">

@@ -34,6 +34,16 @@ namespace TournamentReport.Models {
             }
         }
 
+        public int Cards {
+            get {
+                if (Games == null) {
+                    return 0;
+                }
+                return Games.Where(g => g.HomeTeamId == Id).Sum(g => g.HomeTeamCards)
+                    + Games.Where(g => g.AwayTeamId == Id).Sum(g => g.AwayTeamCards);
+            }
+        }
+
         private void CalculateWinsLosses() {
             if (Games == null) {
                 return;

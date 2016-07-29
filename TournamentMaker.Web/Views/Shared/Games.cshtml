@@ -8,8 +8,10 @@
         <th>Field</th>
         <th>Home Team</th>
         <th>Score</th>
+        <th>Cards</th>
         <th>Away Team</th>
         <th>Score</th>
+        <th>Cards</th>
         @if (ViewBag.HasEditAccess) {
         <th></th>
         }
@@ -49,10 +51,16 @@
             @Html.DisplayFor(m => game.HomeTeamScore)
         </td>
         <td>
+            @Html.DisplayFor(m => game.HomeTeamCards)
+        </td>
+        <td>
             @Html.DisplayFor(m => game.AwayTeam.Name)
         </td>
         <td>
             @Html.DisplayFor(m => game.AwayTeamScore)
+        </td>
+        <td>
+            @Html.DisplayFor(m => game.AwayTeamCards)
         </td>
         @if (ViewBag.HasEditAccess) {
             <td class="actions">

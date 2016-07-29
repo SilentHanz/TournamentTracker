@@ -6,41 +6,33 @@
 
 <h2><em>Standings:</em> @Model.Title</h2>
 
-<table>
-    <tr valign="top">
-        <td>
-            <h2>Total Standings</h2>
-            @Html.Partial("Teams", Model.Teams)
+<h2>Total Standings</h2>
+@Html.Partial("Teams", Model.Teams)
             
-            @if (!Model.Groups.Any()) {
-                <em>@Html.ActionLink("Add Team", "Create", "Teams", new {tournamentSlug = ViewBag.TournamentSlug}, null)</em>
-            }
+@if (!Model.Groups.Any()) {
+    <em>@Html.ActionLink("Add Team", "Create", "Teams", new {tournamentSlug = ViewBag.TournamentSlug}, null)</em>
+}
 
-            @foreach (var grouping in Model.Groups) {
-                <h3>@grouping.Key Standings</h3>
-                @Html.Partial("Teams", grouping)
+@foreach (var grouping in Model.Groups) {
+    <h3>@grouping.Key Standings</h3>
+    @Html.Partial("Teams", grouping)
 
-                if (ViewBag.HasEditAccess) {
-                <em>@Html.ActionLink("Add Team", "Create", "Teams", new {tournamentSlug = ViewBag.TournamentSlug, group = grouping.Key}, null)</em>
-                }
+    if (ViewBag.HasEditAccess) {
+    <em>@Html.ActionLink("Add Team", "Create", "Teams", new {tournamentSlug = ViewBag.TournamentSlug, group = grouping.Key}, null)</em>
+    }
         
-            }
-        </td>
+}
 
-        <td>
-            @if (ViewBag.HasEditAccess) {
-                <em>@Html.ActionLink("Add Round", "Create", "Rounds", new {tournamentSlug = ViewBag.TournamentSlug}, null)</em>
-            }
-            <h2>Games</h2>
-            @foreach (var round in Model.Rounds) {
-                <h3>@round.Name</h3>
+@if (ViewBag.HasEditAccess) {
+    <em>@Html.ActionLink("Add Round", "Create", "Rounds", new {tournamentSlug = ViewBag.TournamentSlug}, null)</em>
+}
+<h2>Games</h2>
+@foreach (var round in Model.Rounds) {
+    <h3>@round.Name</h3>
                 
-                @Html.Partial("Games", round.Games)
-                if (ViewBag.HasEditAccess) {
-                     <em>@Html.ActionLink("Add Game", "Create", "Games", new {id = round.Id, tournamentSlug = ViewBag.TournamentSlug}, null)</em>
-                 }
-            }
+    @Html.Partial("Games", round.Games)
+    if (ViewBag.HasEditAccess) {
+            <em>@Html.ActionLink("Add Game", "Create", "Games", new {id = round.Id, tournamentSlug = ViewBag.TournamentSlug}, null)</em>
+        }
+}
             
-        </td>
-    </tr>
-</table>

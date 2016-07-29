@@ -10,6 +10,7 @@
         <th>Goals For</th>
         <th>Goals Against</th>
         <th>Goal Differential</th>
+        <th>Cards</th>
         <th>Points</th>
         @if (ViewBag.HasEditAccess) {
         <th></th>
@@ -47,6 +48,9 @@
             } else {
                 <span>@team.GoalDifferential</span>
             }
+        </td>
+        <td>
+            @Html.DisplayFor(modelTeam => team.Cards)
         </td>
         <td>
             <strong>@team.Points</strong>
