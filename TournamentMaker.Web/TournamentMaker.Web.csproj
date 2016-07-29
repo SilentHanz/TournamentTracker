@@ -412,6 +412,10 @@
     <Compile Include="Migrations\201603120505418_Initial.Designer.cs">
       <DependentUpon>201603120505418_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607290306142_HomeTeamCards.cs" />
+    <Compile Include="Migrations\201607290306142_HomeTeamCards.Designer.cs">
+      <DependentUpon>201607290306142_HomeTeamCards.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\Field.cs" />
     <Compile Include="Models\Data\IEntity.cs" />
@@ -615,6 +619,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201603120505418_Initial.resx">
       <DependentUpon>201603120505418_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607290306142_HomeTeamCards.resx">
+      <DependentUpon>201607290306142_HomeTeamCards.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
